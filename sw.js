@@ -6,7 +6,7 @@ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);if(u.origin!==location.origin)return;
   const scope=new URL(self.registration.scope).pathname;
   if(r.mode==='navigate'||u.pathname===scope||u.pathname===scope+'index.html'){
-    const net=fetch(r).then(res=>{if(res.ok){const cp=res.clone();caches.open(V).then(c=>c.put('./index.html',cp));}return res;});
+    const net=fetch(r.url,{cache:'no-cache',credentials:'same-origin'}).then(res=>{if(res.ok){const cp=res.clone();caches.open(V).then(c=>c.put('./index.html',cp));}return res;});   /* no-cache: always ask GitHub whether the page changed, so updates arrive straight away */
     const late=new Promise(ok=>setTimeout(()=>ok(caches.match('./index.html')),4000));
     e.respondWith(Promise.race([net,late]).then(x=>x||net).catch(()=>caches.match('./index.html')));return;}
   if(u.pathname.startsWith(scope+'audio/')){e.respondWith(caches.open(AUDIO).then(c=>c.match(r).then(m=>m||fetch(r).then(res=>{if(res.ok)c.put(r,res.clone());return res;}))));return;}
