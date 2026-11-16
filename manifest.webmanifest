@@ -1,7 +1,7 @@
 {
  "name": "Accounting & Finance Revision",
  "short_name": "A&F Revision",
- "description": "Lessons, quizzes, flashcards and friends for Financial Accounting and Operations Management.",
+ "description": "Lessons, quizzes, flashcards and friends for Financial Accounting, Operations Management and Financial Mathematics.",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
